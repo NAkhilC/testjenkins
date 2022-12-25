@@ -1,15 +1,19 @@
+"use strict";
+
 const express = require("express");
+// App
 const app = express();
-const port = 3000;
 app.set("view engine", "ejs");
 app.use(express.static("public"));
+
+// Constants
+const PORT = 8080;
+const HOST = "0.0.0.0";
+
 app.get("/", (req, res) => {
-  res.render("index");
-});
-app.get("/first", (req, res) => {
   res.render("firstpage");
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Running on http://${HOST}:${PORT}`);
 });
