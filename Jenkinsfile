@@ -1,27 +1,38 @@
 
 
-def templateName = 'nodejs-example' 
-def app
 pipeline {
-  agent {
-    node {
-      label 'nodejs' 
-    }
-  }
-  options {
-    timeout(time: 20, unit: 'MINUTES') 
-  }
-  stages {
-   stage('Clone repository') {
-        checkout scm
-    }
-    stage('Build image') {
-        app = docker.build("akhil2715/testnodeapp")
-    }
-    stage('Push image') {
-        docker.withRegistry('https://registry.hub.docker.com', 'docker') {
-            app.push("latest")
-        }
-    }
-  }
+environment {
+registry = "akhil2715/testnodeapp"
+registryCredential = 'docker'
+dockerImage = ''
+}
+agent any
+stages {
+stage('Cloning our Git') {
+steps {
+git 'https://github.com/NAkhilC/testjenkins'
+}
+}
+stage('Building our image') {
+steps{
+script {
+dockerImage = docker.build registry + ":$BUILD_NUMBER"
+}
+}
+}
+stage('Deploy our image') {
+steps{
+script {
+ docker.withRegistry('https://registry.hub.docker.com', 'docker'){
+dockerImage.push()
+}
+}
+}
+}
+stage('Cleaning up') {
+steps{
+sh "docker rmi $registry:$BUILD_NUMBER"
+}
+}
+}
 }
