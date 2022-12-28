@@ -31,7 +31,7 @@ dockerImage.push()
 }
 stage('Cleaning up') {
 steps{
-sh "echo done cleaning"
+sh  "echo \"pushed to docker! Everything is upto date\""
 }
 }
 }
