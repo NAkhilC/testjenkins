@@ -31,7 +31,7 @@ dockerImage.push()
 }
 stage('Cleaning up') {
 steps{
-sh "echo docker $registry:$BUILD_NUMBER"
+sh "echo done cleaning"
 }
 }
 }
