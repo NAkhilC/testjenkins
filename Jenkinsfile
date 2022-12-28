@@ -22,17 +22,11 @@ dockerImage = docker.build registry + ":$BUILD_NUMBER"
 }
 stage('Deploy our image') {
 steps{
-script {
+ script {
  docker.withRegistry('https://registry.hub.docker.com', 'docker'){
-dockerImage.push()
-}
-}
-}
-}
-stage('Cleaning up') {
-steps{
-sh  "echo \"pushed to docker! Everything is upto date\""
-}
-}
-}
+  dockerImage.push()
+        }
+      }
+   }
+   }
 }
