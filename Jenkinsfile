@@ -9,7 +9,6 @@ pipeline {
   }
   stages {
     stage('preamble') {
-         checkout scm
 
     docker.withRegistry('https://registry.hub.docker.com', 'docker') {
 
