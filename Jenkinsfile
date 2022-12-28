@@ -1,5 +1,3 @@
-
-
 node {
      def app 
      agent {
@@ -14,7 +12,7 @@ node {
       checkout scm  
     }
      stage('Build docker Image'){
-      app =  def customImage = docker.build("akhil2715/dockerwebapp1")
+      app = docker.build("akhil2715/dockerwebapp1")
     }
      stage('Test Image'){
        app.inside {
