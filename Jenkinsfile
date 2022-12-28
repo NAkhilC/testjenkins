@@ -1,6 +1,15 @@
-node {
-
-    checkout scm
+pipeline {
+  agent {
+    node {
+      label 'nodejs' 
+    }
+  }
+  options {
+    timeout(time: 20, unit: 'MINUTES') 
+  }
+  stages {
+    stage('preamble') {
+         checkout scm
 
     docker.withRegistry('https://registry.hub.docker.com', 'docker') {
 
@@ -9,4 +18,6 @@ node {
         /* Push the container to the custom Registry */
         customImage.push()
     }
+    }
+  }
 }
