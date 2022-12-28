@@ -1,11 +1,10 @@
-
+#!/bin/bash
 def templatePath = 'https://raw.githubusercontent.com/NAkhilC/testjenkins/master/jj.yaml' 
 def templateName = 'nodejs-example' 
 pipeline {
   agent {
     node {
-      label 'nodejs' 
-      def configVal = readYaml file: 'https://raw.githubusercontent.com/NAkhilC/testjenkins/master/jj.yaml'
+      label 'nodejs'
     }
   }
   options {
@@ -42,7 +41,7 @@ pipeline {
         script {
             openshift.withCluster() {
                 openshift.withProject() {
-                  openshift.newApp(configVal) 
+                  openshift.newApp(templatePath) 
                 }
             }
         }
