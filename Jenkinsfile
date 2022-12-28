@@ -4,7 +4,7 @@ node {
         checkout scm
     }
     stage('Build image') {
-        app = docker.build("getintodevops/hellonode")
+        app = docker.build("akhil2715/testnodeapp")
     }
     stage('Push image') {
         docker.withRegistry('https://registry.hub.docker.com', 'docker') {
