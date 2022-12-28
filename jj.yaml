@@ -1,0 +1,20 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: node-webapp-build
+spec:
+  source:
+    type: Git
+    git:
+      uri: "https://github.com/NAkhilC/testjenkins.git"
+      ref: master
+    contextDir: dockerfile
+  strategy:
+    type: Docker
+    #With this you can set a path to the docker file
+    #dockerStrategy:
+    # dockerfilePath: dockerfile
+  output:
+    to:
+      kind: ImageStreamTag
+      name: "node-webapp:latest"
