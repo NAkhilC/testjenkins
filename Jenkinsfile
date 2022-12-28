@@ -1,25 +1,20 @@
-pipeline {
-     def app 
-     agent {
-     node {
-       label 'nodejs' 
-       }
-     }
-    options {
-      timeout(time: 20, unit: 'MINUTES') 
+node {
+    def app
+    stage('Clone repository') {
+        checkout scm
     }
-    stage('clone repository') {
-      checkout scm  
+    stage('Build image') {
+        app = docker.build("getintodevops/hellonode")
     }
-    stage('Test Image'){
-       app.inside {
-         sh 'echo "TEST PASSED"'
-      }  
+    stage('Test image') {
+        app.inside {
+            sh 'echo "Tests passed"'
+        }
     }
-     stage('Push Image'){
-       docker.withRegistry('https://registry.hub.docker.com', 'docker') {  
-        docker.build("akhil2715/dockerwebapp1")                   
-       app.push("latest")   
-   }
-}
+    stage('Push image') {
+        docker.withRegistry('https://registry.hub.docker.com', 'docker') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
+        }
+    }
 }
