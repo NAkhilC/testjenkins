@@ -38,7 +38,7 @@ pipeline {
         script {
             openshift.withCluster() {
                 openshift.withProject() {
-                  openshift.newApp(templatePath) 
+                  openshift.newApp(templateName, "--as-deployment-config").narrow('svc').expose() 
                 }
                  echo "done creating"
             }
