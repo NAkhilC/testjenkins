@@ -8,10 +8,10 @@ metadata:
     app.openshift.io/vcs-uri: "https://github.com/NAkhilC/testjenkins.git"
     deployment.kubernetes.io/revision: "1"
     image.openshift.io/triggers: >-
-      [{"from":{"kind":"ImageStreamTag","name":"testjenkins-git-test:latest","namespace":"nallamothuakhil15-dev"},"fieldPath":"spec.template.spec.containers[?(@.name==\"testjenkins-git-test\")].image","pause":"false"}]
+      [{"from":{"kind":"ImageStreamTag","name":"nodejenkins-git-test:latest","namespace":"nallamothuakhil15-dev"},"fieldPath":"spec.template.spec.containers[?(@.name==\"nodejenkins-git-test\")].image","pause":"false"}]
     openshift.io/generated-by: OpenShiftWebConsole
   resourceVersion: "2071846696"
-  name: testjenkins-git-test
+  name: nodejenkins-git-test
   uid: fdb4fbf0-d683-44b7-992f-0ff81dfdaa4b
   creationTimestamp: "2022-12-29T02:10:10Z"
   generation: 1
@@ -57,7 +57,7 @@ metadata:
                 "f:deployment": {}
             "f:spec":
               "f:containers":
-                'k:{"name":"testjenkins-git-test"}':
+                'k:{"name":"nodejenkins-git-test"}':
                   .: {}
                   "f:image": {}
                   "f:imagePullPolicy": {}
@@ -105,27 +105,27 @@ metadata:
       subresource: status
   namespace: nallamothuakhil15-dev
   labels:
-    app: testjenkins-git-test
-    app.kubernetes.io/component: testjenkins-git-test
-    app.kubernetes.io/instance: testjenkins-git-test
-    app.kubernetes.io/name: testjenkins-git-test
+    app: nodejenkins-git-test
+    app.kubernetes.io/component: nodejenkins-git-test
+    app.kubernetes.io/instance: nodejenkins-git-test
+    app.kubernetes.io/name: nodejenkins-git-test
     app.kubernetes.io/part-of: docker-node
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: testjenkins-git-test
+      app: nodejenkins-git-test
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: testjenkins-git-test
-        deployment: testjenkins-git-test
+        app: nodejenkins-git-test
+        deployment: nodejenkins-git-test
     spec:
       containers:
-        - name: testjenkins-git-test
+        - name: nodejenkins-git-test
           image: >-
-            image-registry.openshift-image-registry.svc:5000/nallamothuakhil15-dev/testjenkins-git-test:latest
+            image-registry.openshift-image-registry.svc:5000/nallamothuakhil15-dev/nodejenkins-git-test:latest
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
@@ -159,4 +159,4 @@ status:
       lastUpdateTime: "2022-12-29T02:10:10Z"
       lastTransitionTime: "2022-12-29T02:10:10Z"
       reason: ReplicaSetUpdated
-      message: ReplicaSet "testjenkins-git-test-6d5c586dbd" is progressing.
+      message: ReplicaSet "nodejenkins-git-test-6d5c586dbd" is progressing.
