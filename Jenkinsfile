@@ -1,5 +1,4 @@
 #!/bin/bash
-def templatePath = 'https://raw.githubusercontent.com/NAkhilC/testjenkins/master/jj.yaml' 
 def templateName = 'nodejs-example' 
 pipeline {
   agent {
