@@ -7,7 +7,7 @@ pipeline {
     timeout(time: 20, unit: 'MINUTES') 
   }
   stages {
-    stage('build') {
+    stage('all projects') {
         steps {
             script {
                 openshift.withCluster() {
