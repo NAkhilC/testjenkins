@@ -9,7 +9,11 @@ pipeline {
     stage('build') {
         steps {
             script {
-               echo "Using project:"
+                openshift.withCluster() {
+                    openshift.withProject() {
+                        echo "Using project: ${openshift.project()}"
+                    }
+                }
             }
         }
     }
