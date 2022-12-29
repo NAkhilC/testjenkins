@@ -1,12 +1,12 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  name: maven-webapp-build
+  name: node-webapp-build
 spec:
   source:
     type: Git
     git:
-      uri: 'https://github.com/Chathuru/maven-web-project.git'
+      uri: 'https://github.com/NAkhilC/testjenkins.git'
       ref: master
     contextDir: dockerfile
   strategy:
@@ -17,4 +17,4 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: 'maven-webapp:latest
+      name: 'node-webapp:latest
