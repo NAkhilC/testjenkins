@@ -7,9 +7,7 @@ pipeline {
       label 'nodejs'
     }
   }
-  options {
-    timeout(time: 20, unit: 'MINUTES') 
-  }
+
   stages {
     stage('preamble') {
         steps {
