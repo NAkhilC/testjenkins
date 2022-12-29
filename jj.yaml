@@ -1,41 +1,162 @@
-apiVersion: v1
-kind: Template
+kind: Deployment
+apiVersion: apps/v1
 metadata:
   annotations:
-    description: build config template
-  name: build-config-template
-parameters:
-  - description: Name of the service to be deployed
-    displayName: Service Name
-    name: SERVICE_NAME
-  - description: Git repository where service is stored
-    displayName: GIT Service URL
-    name: SERVICE_GIT_URL
-objects:
-  - apiVersion: v1
-    kind: BuildConfig
+    alpha.image.policy.openshift.io/resolve-names: "*"
+    app.openshift.io/route-disabled: "false"
+    app.openshift.io/vcs-ref: ""
+    app.openshift.io/vcs-uri: "https://github.com/NAkhilC/testjenkins.git"
+    deployment.kubernetes.io/revision: "1"
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"testjenkins-git-test:latest","namespace":"nallamothuakhil15-dev"},"fieldPath":"spec.template.spec.containers[?(@.name==\"testjenkins-git-test\")].image","pause":"false"}]
+    openshift.io/generated-by: OpenShiftWebConsole
+  resourceVersion: "2071846696"
+  name: testjenkins-git-test
+  uid: fdb4fbf0-d683-44b7-992f-0ff81dfdaa4b
+  creationTimestamp: "2022-12-29T02:10:10Z"
+  generation: 1
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: apps/v1
+      time: "2022-12-29T02:10:10Z"
+      fieldsType: FieldsV1
+      fieldsV1:
+        "f:metadata":
+          "f:annotations":
+            .: {}
+            "f:alpha.image.policy.openshift.io/resolve-names": {}
+            "f:app.openshift.io/route-disabled": {}
+            "f:app.openshift.io/vcs-ref": {}
+            "f:app.openshift.io/vcs-uri": {}
+            "f:image.openshift.io/triggers": {}
+            "f:openshift.io/generated-by": {}
+          "f:labels":
+            .: {}
+            "f:app": {}
+            "f:app.kubernetes.io/component": {}
+            "f:app.kubernetes.io/instance": {}
+            "f:app.kubernetes.io/name": {}
+            "f:app.kubernetes.io/part-of": {}
+        "f:spec":
+          "f:progressDeadlineSeconds": {}
+          "f:replicas": {}
+          "f:revisionHistoryLimit": {}
+          "f:selector": {}
+          "f:strategy":
+            "f:rollingUpdate":
+              .: {}
+              "f:maxSurge": {}
+              "f:maxUnavailable": {}
+            "f:type": {}
+          "f:template":
+            "f:metadata":
+              "f:labels":
+                .: {}
+                "f:app": {}
+                "f:deployment": {}
+            "f:spec":
+              "f:containers":
+                'k:{"name":"testjenkins-git-test"}':
+                  .: {}
+                  "f:image": {}
+                  "f:imagePullPolicy": {}
+                  "f:name": {}
+                  "f:resources": {}
+                  "f:terminationMessagePath": {}
+                  "f:terminationMessagePolicy": {}
+              "f:dnsPolicy": {}
+              "f:restartPolicy": {}
+              "f:schedulerName": {}
+              "f:securityContext": {}
+              "f:terminationGracePeriodSeconds": {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: apps/v1
+      time: "2022-12-29T02:10:10Z"
+      fieldsType: FieldsV1
+      fieldsV1:
+        "f:metadata":
+          "f:annotations":
+            "f:deployment.kubernetes.io/revision": {}
+        "f:status":
+          "f:conditions":
+            .: {}
+            'k:{"type":"Available"}':
+              .: {}
+              "f:lastTransitionTime": {}
+              "f:lastUpdateTime": {}
+              "f:message": {}
+              "f:reason": {}
+              "f:status": {}
+              "f:type": {}
+            'k:{"type":"Progressing"}':
+              .: {}
+              "f:lastTransitionTime": {}
+              "f:lastUpdateTime": {}
+              "f:message": {}
+              "f:reason": {}
+              "f:status": {}
+              "f:type": {}
+          "f:observedGeneration": {}
+          "f:replicas": {}
+          "f:unavailableReplicas": {}
+          "f:updatedReplicas": {}
+      subresource: status
+  namespace: nallamothuakhil15-dev
+  labels:
+    app: testjenkins-git-test
+    app.kubernetes.io/component: testjenkins-git-test
+    app.kubernetes.io/instance: testjenkins-git-test
+    app.kubernetes.io/name: testjenkins-git-test
+    app.kubernetes.io/part-of: docker-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testjenkins-git-test
+  template:
     metadata:
-      name: nothing
+      creationTimestamp: null
+      labels:
+        app: testjenkins-git-test
+        deployment: testjenkins-git-test
     spec:
-      output:
-        to:
-          kind: ImageStreamTag
-          name: imagenothing:latest
-      source:
-        contextDir: /
-        git:
-          ref: master
-          uri: https://github.com/NAkhilC/testjenkins.git
-        type: Git
-      strategy:
-        sourceStrategy:
-          env:
-            - name: GIT_SSL_NO_VERIFY
-              value: "true"
-            - name: NODE_TLS_REJECT_UNAUTHORIZED
-              value: "0"
-          from:
-            kind: ImageStreamTag
-            name: s2i-openshift-alpine-nodejs:latest
-            namespace: drya024
-        type: Source
+      containers:
+        - name: testjenkins-git-test
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/nallamothuakhil15-dev/testjenkins-git-test:latest
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+status:
+  observedGeneration: 1
+  replicas: 1
+  updatedReplicas: 1
+  unavailableReplicas: 1
+  conditions:
+    - type: Available
+      status: "False"
+      lastUpdateTime: "2022-12-29T02:10:10Z"
+      lastTransitionTime: "2022-12-29T02:10:10Z"
+      reason: MinimumReplicasUnavailable
+      message: Deployment does not have minimum availability.
+    - type: Progressing
+      status: "True"
+      lastUpdateTime: "2022-12-29T02:10:10Z"
+      lastTransitionTime: "2022-12-29T02:10:10Z"
+      reason: ReplicaSetUpdated
+      message: ReplicaSet "testjenkins-git-test-6d5c586dbd" is progressing.
