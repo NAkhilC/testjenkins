@@ -2,19 +2,25 @@ apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
   name: node-webapp-build
+  labels:
+    app: node-app-akhil
+  annotations:
+    description: Defines a sample node app with no routes
 spec:
   source:
     type: Git
     git:
-      uri: 'https://github.com/NAkhilC/testjenkins.git'
+      uri: "https://github.com/NAkhilC/testjenkins.git"
       ref: master
     contextDir: dockerfile
   strategy:
     type: Docker
-    #With this you can set a path to the docker file
-    #dockerStrategy:
-    # dockerfilePath: dockerfile
+    dockerStrategy: {}
   output:
     to:
       kind: ImageStreamTag
-      name: 'node-webapp:latest
+      name: "node-webapp:latest"
+  resources: {}
+  successfulBuildHistoryLimit: 5
+  failedBuildHistoryLimit: 5
+  postCommit: {}
