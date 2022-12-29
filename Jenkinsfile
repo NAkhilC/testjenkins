@@ -27,6 +27,7 @@ pipeline {
                   if (openshift.selector("secrets", templateName).exists()) { 
                     openshift.selector("secrets", templateName).delete()
                   }
+                  echo "done cleanup"
                 }
             }
         }
@@ -39,7 +40,9 @@ pipeline {
                 openshift.withProject() {
                   openshift.newApp(templatePath) 
                 }
+                 echo "done creating"
             }
+            
         }
       }
     }
