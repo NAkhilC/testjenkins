@@ -20,8 +20,5 @@ dockerImage = docker.build registry + ":$BUILD_NUMBER"
 }
 }
 }
-stage('Push image') {
-
-}
 }
 }
