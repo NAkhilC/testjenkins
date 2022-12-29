@@ -12,7 +12,7 @@ spec:
     git:
       uri: "https://github.com/NAkhilC/testjenkins.git"
       ref: master
-    contextDir: dockerfile
+    contextDir: Dockerfile
   strategy:
     type: Docker
     dockerStrategy: {}
