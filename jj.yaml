@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
     - name: node-docker-app
-      image: index.docker.io/akhil2715/testnodeapp:latest
+      image: docker.io/akhil2715/testnodeapp:latest
       imagePullPolicy: Always
       command: ["echo", "SUCCESS"]
   imagePullSecrets:
