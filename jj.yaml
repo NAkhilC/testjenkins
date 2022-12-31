@@ -9,4 +9,4 @@ spec:
       imagePullPolicy: Always
       command: ["echo", "SUCCESS"]
   imagePullSecrets:
-    - name: myregistrykey
+    - name: docker
