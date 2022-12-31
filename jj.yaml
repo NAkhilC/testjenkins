@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: ngnix-image
+  name: testinga-app-docker
 spec:
   containers:
- - name: test-deployment1
-   image: https://hub.docker.com/r/akhil2715/testnodeapp
-   imagePullPolicy: Always
+    - name: node-docker-app
+      image: index.docker.io/akhil2715/testnodeapp:latest
+      imagePullPolicy: Always
+      command: ["echo", "SUCCESS"]
   imagePullSecrets:
- - name: docker
+    - name: myregistrykey
