@@ -1,87 +1,11 @@
-apiVersion: build.openshift.io/v1
-kind: BuildConfig
+apiVersion: v1
+kind: Pod
 metadata:
-  name: node-webapp-build
-  labels:
-    app: node-app-akhil
-  annotations:
-    description: Defines a sample node app with no routes
+  name: ngnix-image
 spec:
-  source:
-    type: Git
-    git:
-      uri: "https://github.com/NAkhilC/testjenkins.git"
-      ref: master
-    contextDir: Dockerfile
-  strategy:
-    type: Docker
-    dockerStrategy: {}
-  output:
-    to:
-      kind: ImageStreamTag
-      name: "node-webapp:latest"
-  resources: {}
-  successfulBuildHistoryLimit: 5
-  failedBuildHistoryLimit: 5
-  postCommit: {}
-
-kind: Deployment
-apiVersion: apps/v1
-metadata:
-  annotations:
-    alpha.image.policy.openshift.io/resolve-names: '*'
-    app.openshift.io/route-disabled: 'false'
-    deployment.kubernetes.io/revision: '1'
-    image.openshift.io/triggers: >-
-      [{"from":{"kind":"ImageStreamTag","name":"testnodeapp3:latest","namespace":"nallamothuakhil15-dev"},"fieldPath":"spec.template.spec.containers[?(@.name==\"testnodeapp3\")].image","pause":"false"}]
-    openshift.io/generated-by: OpenShiftWebConsole
-  resourceVersion: '2078859851'
-  name: testnodeapp3
-  uid: 5dc3b5c5-ff5e-4562-b121-59fdc2cf2628
-  creationTimestamp: '2022-12-31T03:22:30Z'
-  generation: 1
-  namespace: nallamothuakhil15-dev
-  labels:
-    app: testnodeapp3
-    app.kubernetes.io/component: testnodeapp3
-    app.kubernetes.io/instance: testnodeapp3
-    app.kubernetes.io/name: testnodeapp3
-    app.kubernetes.io/part-of: docker-node
-    app.openshift.io/runtime-namespace: nallamothuakhil15-dev
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: testnodeapp3
-  template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        app: testnodeapp3
-        deployment: testnodeapp3
-      annotations:
-        openshift.io/generated-by: OpenShiftWebConsole
-    spec:
-      containers:
-        - name: testnodeapp3
-          image: >-
-            image-registry.openshift-image-registry.svc:5000/nallamothuakhil15-dev/testnodeapp3@sha256:5563f9936a01f1b2dd289699e0533e78a76f357fee79e9bfba57d95b9ad1ae9d
-          ports:
-            - containerPort: 8080
-              protocol: TCP
-          resources: {}
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
-          imagePullPolicy: Always
-      restartPolicy: Always
-      terminationGracePeriodSeconds: 30
-      dnsPolicy: ClusterFirst
-      securityContext: {}
-      schedulerName: default-scheduler
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 25%
-      maxSurge: 25%
-  revisionHistoryLimit: 10
-  progressDeadlineSeconds: 600
+  containers:
+ - name: test-deployment1
+  image: https://hub.docker.com/r/akhil2715/testnodeapp
+  imagePullPolicy: Always
+ imagePullSecrets:
+ - name: docker
