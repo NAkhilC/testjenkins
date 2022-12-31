@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
  - name: test-deployment1
-  image: https://hub.docker.com/r/akhil2715/testnodeapp
-  imagePullPolicy: Always
- imagePullSecrets:
+   image: https://hub.docker.com/r/akhil2715/testnodeapp
+   imagePullPolicy: Always
+  imagePullSecrets:
  - name: docker
