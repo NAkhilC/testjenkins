@@ -1,12 +1,16 @@
-apiVersion: v1
-kind: Pod
+apiVersion: image.openshift.io/v1
+kind: ImageStream
 metadata:
-  name: testinga-app-docker
+  name: testinga1-app-docker
 spec:
-  containers:
-    - name: node-docker-app
-      image: docker.io/akhil2715/testnodeapp:latest
-      imagePullPolicy: Always
-      command: ["echo", "SUCCESS"]
+  lookupPolicy:
+    local: false
   imagePullSecrets:
     - name: docker
+  tags:
+    - name: estinga1-app-docker
+      from:
+        kind: DockerImage
+        name: akhil2715/testnodeapp:latest
+      referencePolicy:
+        type: Source
