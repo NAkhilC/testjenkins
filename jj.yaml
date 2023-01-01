@@ -24,18 +24,3 @@ spec:
       name: mywebsite:latest
   triggers:
     - type: ImageChange
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: sample-nodejs-service
-spec:
-  ports:
-    - name: sample-nodejs-port-service
-      targetPort: 3000
-      port: 3000
-      nodePort: 30243
-      protocol: TCP
-  selector:
-    app: sample-nodejs
-  type: NodePort
