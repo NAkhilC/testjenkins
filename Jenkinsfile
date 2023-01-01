@@ -10,9 +10,7 @@ pipeline {
   options {
     timeout(time: 20, unit: 'MINUTES') 
   }
-  environment {
-    //templatePath = loadValuesYaml()
-  }
+
   stages {
     stage('all projects') {
         steps {
