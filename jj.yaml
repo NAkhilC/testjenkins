@@ -1,26 +1,29 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
 metadata:
-  name: sample-nodejs
+  name: mywebsite
   labels:
-    app: sample-nodejs
+    app: mywebsite
 spec:
-  selector:
-    matchLabels:
-      app: sample-nodejs
-  template:
-    metadata:
-      labels:
-        app: sample-nodejs
-    spec:
-      containers:
-        - image: akhil2715/testnodeapp:latest
-          name: nodejs-api
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 3000
-      imagePullSecrets:
-        - name: docker
+  source:
+    type: Git
+    git:
+      uri: https://github.com/NAkhilC/testjenkins.git
+    contextDir: httpd-hello-world
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+      from:
+        kind: ImageStreamTag # Use an imagestream tag as 'FROM'
+        namespace: toms-project # Which project?
+        name: httpd:latest # Use the imagestream created above
+  output:
+    to:
+      kind: ImageStreamTag
+      name: mywebsite:latest
+  triggers:
+    - type: ImageChange
 ---
 apiVersion: v1
 kind: Service
