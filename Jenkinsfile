@@ -45,7 +45,7 @@ pipeline {
         script {
             openshift.withCluster() {
                 openshift.withProject() {
-                  openshift.apply(readFile(templatePath))
+                  openshift.newApp(templatePath) 
                 }
                  echo "done creating"
             }
