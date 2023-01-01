@@ -1,6 +1,6 @@
 #!/bin/bash
 def loadValuesYaml(){
-  def templatePath  = file: 'test.json'
+  def templatePath  = readJSON text: 'test.json'
   return templatePath;
 } 
 def templateName = 'nodejs-example' 
