@@ -29,7 +29,7 @@ spec:
     - name: sample-nodejs-port-service
       targetPort: 3000
       port: 3000
-      nodePort: 30253
+      nodePort: 30243
       protocol: TCP
   selector:
     app: sample-nodejs
