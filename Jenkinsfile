@@ -49,7 +49,7 @@ pipeline {
                   echo templatePath
                   datas = readYaml (file: 'jj.yaml')
                   echo datas
-                  openshift.newApp(datas) 
+                  openshift.newApp(datas.toString()) 
                 }
                  echo "done creating"
             }
