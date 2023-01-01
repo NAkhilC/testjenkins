@@ -1,6 +1,6 @@
 #!/bin/bash
 def loadValuesYaml(){
-  def templatePath  = readYaml file: 'jj.yaml'
+  def templatePath  = 'jj.yaml'
   return templatePath;
 } 
 def templateName = 'nodejs-example' 
