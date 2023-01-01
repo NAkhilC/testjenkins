@@ -7,13 +7,12 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 // Constants
-const PORT = 8080;
-const HOST = "0.0.0.0";
+const PORT = 3000;
 
 app.get("/", (req, res) => {
   res.render("firstpage");
 });
 
-app.listen(PORT, HOST, () => {
-  console.log(`Running on http://${HOST}:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Running on http://localhost:${PORT}`);
 });
