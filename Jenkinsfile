@@ -46,10 +46,10 @@ pipeline {
             openshift.withCluster() {
                 openshift.withProject() {
                   echo "inside"
-                  echo templatePath
+                  echo templatePath.toString()
                   datas = readYaml (file: 'jj.yaml')
                   echo datas
-                  openshift.newApp(datas.toString()) 
+                  openshift.newApp(templatePath.toString()) 
                 }
                  echo "done creating"
             }
