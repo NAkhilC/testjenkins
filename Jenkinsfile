@@ -11,7 +11,7 @@ pipeline {
     timeout(time: 20, unit: 'MINUTES') 
   }
   environment {
-    templatePath = loadValuesYaml()
+    //templatePath = loadValuesYaml()
   }
   stages {
     stage('all projects') {
@@ -45,6 +45,7 @@ pipeline {
         script {
             openshift.withCluster() {
                 openshift.withProject() {
+                  openshift.apply(readFile(params.APP_TEMPLATE_PATH))
                   openshift.newApp(templatePath) 
                 }
                  echo "done creating"
