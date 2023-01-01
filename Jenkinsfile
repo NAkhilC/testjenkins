@@ -46,7 +46,7 @@ pipeline {
             openshift.withCluster() {
                 openshift.withProject() {
                   echo "inside"
-                  echo templatePath.toString()
+                  echo templatePath
                   datas = readYaml (file: 'jj.yaml')
                   echo datas
                   openshift.newApp({templatePath}) 
