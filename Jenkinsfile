@@ -1,6 +1,6 @@
 #!/bin/bash
 def loadValuesYaml(){
-  def templatePath  = file: 'jj.yaml'
+  def templatePath  = readYaml file: 'jj.yaml'
   return templatePath;
 } 
 def templateName = 'nodejs-example' 
@@ -49,7 +49,7 @@ pipeline {
                   echo templatePath
                   datas = readYaml (file: 'jj.yaml')
                   echo datas
-                  openshift.newApp({templatePath}) 
+                  openshift.newApp({templatep}) 
                 }
                  echo "done creating"
             }
