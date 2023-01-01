@@ -1,8 +1,11 @@
 #!/bin/bash
-def templatePath = 'https://raw.githubusercontent.com/NAkhilC/testjenkins/master/jj.yaml' 
+  node {
+   def templatePath  = readYaml file: 'https://raw.githubusercontent.com/NAkhilC/testjenkins/master/jj.yaml'
+   } 
 def templateName = 'nodejs-example' 
 pipeline {
   agent any
+
   options {
     timeout(time: 20, unit: 'MINUTES') 
   }
