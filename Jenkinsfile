@@ -49,7 +49,7 @@ pipeline {
                   echo templatePath.toString()
                   datas = readYaml (file: 'jj.yaml')
                   echo datas
-                  openshift.newApp({"apiVersion": "apps/v1","kind": "Deployment","metadata": { "name": "sample-nodejs", "labels": {   "app": "sample-nodejs" } }, "spec": {   "selector": {     "matchLabels": {       "app": "sample-nodejs"     }   },   "template": {     "metadata": {      "labels": {        "app": "sample-nodejs"      }    } "spec": {      "containers": {         "image": "akhil2715/testnodeapp:latest",   "name": "nodejs-api",    "imagePullPolicy": "Always",    "ports": {    "containerPort": 3000     }     }   }   } }}) 
+                  openshift.newApp({templatePath}) 
                 }
                  echo "done creating"
             }
