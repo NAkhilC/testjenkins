@@ -45,6 +45,7 @@ pipeline {
         script {
             openshift.withCluster() {
                 openshift.withProject() {
+                  echo "inside"
                   openshift.newApp(templatePath) 
                 }
                  echo "done creating"
