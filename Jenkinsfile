@@ -1,6 +1,6 @@
 #!/bin/bash
 def loadValuesYaml(){
-  def templatePath  = readYaml file: 'https://github.com/NAkhilC/testjenkins/blob/420e97b90ab62da6c1455c7479515a303ce17b87/jj.yaml'
+  def templatePath  = readYaml file: 'jj.yaml'
   return templatePath;
 } 
 def templateName = 'nodejs-example' 
