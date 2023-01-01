@@ -1,13 +1,17 @@
 #!/bin/bash
-  node {
-   def templatePath  = readYaml file: 'https://raw.githubusercontent.com/NAkhilC/testjenkins/master/jj.yaml'
-   } 
+def loadValuesYaml(){
+  def templatePath  = readYaml file: 'https://raw.githubusercontent.com/NAkhilC/testjenkins/master/jj.yaml'
+  return templatePath;
+} 
 def templateName = 'nodejs-example' 
 pipeline {
   agent any
 
   options {
     timeout(time: 20, unit: 'MINUTES') 
+  }
+  environment {
+    templatePath = loadValuesYaml()
   }
   stages {
     stage('all projects') {
