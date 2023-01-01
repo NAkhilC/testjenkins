@@ -47,7 +47,9 @@ pipeline {
                 openshift.withProject() {
                   echo "inside"
                   echo templatePath
-                  openshift.newApp(templatePath) 
+                  datas = readYaml (file: 'jj.yaml')
+                  echo datas
+                  openshift.newApp(datas) 
                 }
                  echo "done creating"
             }
