@@ -45,7 +45,7 @@ pipeline {
         script {
             openshift.withCluster() {
                 openshift.withProject() {
-                  openshift.newApp('jj.yaml') 
+                  openshift.newApp(templatePath) 
                 }
                  echo "done creating"
             }
