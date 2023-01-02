@@ -2,7 +2,6 @@
 // Based on:
 // https://raw.githubusercontent.com/redhat-cop/container-pipelines/master/basic-spring-boot/Jenkinsfile
 
-library identifier: "pipeline-library@v1.5",
 retriever: modernSCM(
   [
     $class: "GitSCMSource",
@@ -28,7 +27,7 @@ pipeline {
                 // This uploads your application's source code and performs a binary build in OpenShift
                 // This is a step defined in the shared library (see the top for the URL)
                 // (Or you could invoke this step using 'oc' commands!)
-                binaryBuild(buildConfigName: appName, buildFromPath: ".")
+                binaryBuild(buildConfigName: appName, buildFromPath: "jj.yaml")
             }
         }
 
