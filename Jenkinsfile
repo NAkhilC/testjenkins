@@ -1,102 +1,38 @@
 #!/bin/bash
-def loadValuesYaml(){
-  def templatePath  = readFile file: 'jj.yaml'
-  return templatePath;
-} 
-def templatePath = 'https://raw.githubusercontent.com/NAkhilC/testjenkins/master/test.json'
-def templateName = 'nodejs-example' 
-pipeline {
-  agent any
+// Based on:
+// https://raw.githubusercontent.com/redhat-cop/container-pipelines/master/basic-spring-boot/Jenkinsfile
 
-  options {
-    timeout(time: 20, unit: 'MINUTES') 
-  }
-  stages {
-    stage('all projects') {
-        steps {
-            script {
-                openshift.withCluster() {
-                    openshift.withProject() {
-                        echo "Using project: ${openshift.project()}"
-                    }
-                }
+library identifier: "pipeline-library@v1.5",
+retriever: modernSCM(
+  [
+    $class: "GitSCMSource",
+    remote: "https://github.com/NAkhilC/testjenkins.git"
+  ]
+)
+
+// The name you want to give your Spring Boot application
+// Each resource related to your app will be given this name
+appName = "hello-java-spring-boot"
+
+pipeline {
+    // Use the 'maven' Jenkins agent image which is provided with OpenShift 
+    agent { label "maven" }
+    stages {
+        stage("Checkout") {
+            steps {
+                checkout scm
             }
         }
-    }
-    stage('cleanup') {
-      steps {
-        script {
-            openshift.withCluster() {
-                openshift.withProject() {
-                  openshift.selector("all", [ template : templateName ]).delete() 
-                  if (openshift.selector("secrets", templateName).exists()) { 
-                    openshift.selector("secrets", templateName).delete()
-                  }
-                  echo "done cleanup"
-                }
+        stage("Docker Build") {
+            steps {
+                // This uploads your application's source code and performs a binary build in OpenShift
+                // This is a step defined in the shared library (see the top for the URL)
+                // (Or you could invoke this step using 'oc' commands!)
+                binaryBuild(buildConfigName: appName, buildFromPath: ".")
             }
         }
-      }
+
+        // You could extend the pipeline by tagging the image,
+        // or deploying it to a production environment, etc......
     }
-    stage('create') {
-      steps {
-        script {
-            openshift.withCluster() {
-                openshift.withProject() {
-                  echo "inside"
-                  echo templatePath
-                  datas = readYaml (file: 'jj.yaml')
-                  echo datas
-                  openshift.newApp(templatep.toString()) 
-                }
-                 echo "done creating"
-            }
-            
-        }
-      }
-    }
-    stage('build') {
-      steps {
-        script {
-            openshift.withCluster() {
-                openshift.withProject() {
-                  def builds = openshift.selector("bc", templateName).related('builds')
-                  timeout(5) { 
-                    builds.untilEach(1) {
-                      return (it.object().status.phase == "Complete")
-                    }
-                  }
-                }
-            }
-        }
-      }
-    }
-    stage('deploy') {
-      steps {
-        script {
-            openshift.withCluster() {
-                openshift.withProject() {
-                  def rm = openshift.selector("dc", templateName).rollout().latest()
-                  timeout(5) { 
-                    openshift.selector("dc", templateName).related('pods').untilEach(1) {
-                      return (it.object().status.phase == "Running")
-                    }
-                  }
-                }
-            }
-        }
-      }
-    }
-    stage('tag') {
-      steps {
-        script {
-            openshift.withCluster() {
-                openshift.withProject() {
-                  openshift.tag("${templateName}:latest", "${templateName}-staging:latest") 
-                }
-            }
-        }
-      }
-    }
-  }
 }
