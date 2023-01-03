@@ -1,4 +1,4 @@
-def templateName = 'nodejs-example' 
+def templateName = 'sample-nodejs' 
 pipeline {
   agent {
     node {
@@ -40,8 +40,8 @@ pipeline {
             openshift.withCluster() {
                 openshift.withProject() {
                    sh '''
-                  oc create -f https://raw.githubusercontent.com/NAkhilC/testjenkins/master/jj.yaml
-                  oc start-build sample-nodejs-service
+
+                  oc start-build sample-nodejs
                   '''
                 }
             }
