@@ -1,8 +1,9 @@
-def templatePath = 'https://raw.githubusercontent.com/NAkhilC/testjenkins/master/jj.yaml' 
 def templateName = 'nodejs-example' 
-pipeline{
-     {
-  agent  any
+pipeline {
+  agent {
+    node {
+      label 'nodejs' 
+    }
   }
   options {
     timeout(time: 20, unit: 'MINUTES') 
@@ -38,7 +39,7 @@ pipeline{
         script {
             openshift.withCluster() {
                 openshift.withProject() {
-                  sh '''
+                   sh '''
                   oc create -f https://raw.githubusercontent.com/NAkhilC/testjenkins/master/jj.yaml
                   oc start-build sample-nodejs-service
                   '''
