@@ -40,8 +40,7 @@ pipeline {
             openshift.withCluster() {
                 openshift.withProject() {
                    sh '''
-
-                  oc start-build sample-nodejs
+                  oc create -f https://raw.githubusercontent.com/NAkhilC/testjenkins/master/jj.yaml
                   '''
                 }
             }
